@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poc-llm-bot
+  labels:
+    app: poc-llm-bot
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: poc-llm-bot
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: poc-llm-bot
+    spec:
+      containers:
+      - name: poc-llm-bot
+        image: flask-app:0.0.2
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: config-volume
+          mountPath: /configs/
+      volumes:
+      - name: config-volume
+        configMap:
+          name: poc-llm-bot
