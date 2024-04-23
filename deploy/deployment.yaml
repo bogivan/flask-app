@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: poc-llm-bot
-        image: flask-app:0.0.2
+        image: flask-app:0.0.1
         ports:
         - containerPort: 5000
         volumeMounts:
